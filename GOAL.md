@@ -30,6 +30,6 @@
 - [x] 部署上线：https://site-pulse-brown.vercel.app
 - [x] 运营脚本：daily-report / growth-daily / daily-ops
 - [x] Reddit 发帖文案（docs/REDDIT-POSTS.md）
-- [ ] GitHub 公开仓库 + README 截图
-- [ ] 在 r/selfhosted 发帖（文案已备好）
-- [ ] 录 60 秒 Loom demo
+- [x] GitHub 公开仓库 + README 截图 — https://github.com/tangyumeng/site-pulse
+- [ ] 在 r/selfhosted 发帖（文案已备好，docs/REDDIT-POSTS.md）
+- [ ] 录 60 秒 Loom demo（脚本 docs/LOOM-SCRIPT.md）

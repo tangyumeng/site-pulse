@@ -6,7 +6,7 @@
 - [x] Public status page per client
 - [x] Stripe Managed checkout + webhook
 - [x] Commercial terms doc
-- [ ] README with screenshot/GIF of add-site flow
+- [x] README with screenshot of dashboard (docs/screenshots/dashboard.png)
 
 ## Reddit launch (r/selfhosted)
 

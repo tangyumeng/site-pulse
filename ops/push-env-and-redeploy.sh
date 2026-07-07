@@ -3,29 +3,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-source_env() {
-  set -a
-  # shellcheck disable=SC1091
-  source <(grep -v '^#' .env | grep -v '^$' | sed 's/^/export /')
-  set +a
-}
-
-source_env
 VERCEL="npx vercel"
 APP_URL="${APP_URL:-https://site-pulse-brown.vercel.app}"
 
-push_env() {
-  local key="$1" val="$2"
-  [[ -n "$val" ]] || return 0
-  $VERCEL env rm "$key" production -y >/dev/null 2>&1 || true
-  printf '%s' "$val" | $VERCEL env add "$key" production >/dev/null
-  echo "✓ $key"
-}
-
 echo "==> Push env to Vercel..."
-push_env STRIPE_SECRET_KEY "$STRIPE_SECRET_KEY"
-push_env STRIPE_PRICE_MANAGED "$STRIPE_PRICE_MANAGED"
-push_env APP_URL "$APP_URL"
+node ops/push-vercel-env.mjs
 
 echo "==> Create Stripe webhook..."
 WH_OUT=$(APP_URL="$APP_URL" node ops/setup-webhook.js 2>&1)
@@ -36,7 +18,7 @@ if [[ -n "$WHSEC" ]]; then
   else
     echo "STRIPE_WEBHOOK_SECRET=$WHSEC" >> .env
   fi
-  push_env STRIPE_WEBHOOK_SECRET "$WHSEC"
+  node ops/push-vercel-env.mjs
 else
   echo "○ webhook already exists or skipped"
 fi
