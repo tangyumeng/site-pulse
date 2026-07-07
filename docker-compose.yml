@@ -1,0 +1,13 @@
+services:
+  site-pulse:
+    build: .
+    ports:
+      - "4050:4050"
+    volumes:
+      - site-pulse-data:/data
+    env_file:
+      - .env
+    restart: unless-stopped
+
+volumes:
+  site-pulse-data:

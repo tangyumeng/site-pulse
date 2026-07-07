@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SitePulse Dashboard</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <nav class="nav">
+        <a href="/" class="logo">SitePulse</a>
+        <span id="summary-pill" class="pill">Loading…</span>
+      </nav>
+
+      <section class="dashboard-header">
+        <h1>Client sites</h1>
+        <button id="add-site-btn" class="btn btn-primary">+ Add site</button>
+      </section>
+
+      <form id="add-form" class="card add-form hidden">
+        <h3>Add client site</h3>
+        <label>
+          Client name
+          <input name="clientName" required placeholder="Acme Corp" />
+        </label>
+        <label>
+          Website URL
+          <input name="url" required placeholder="https://acme.com" />
+        </label>
+        <label>
+          Notes (optional)
+          <input name="notes" placeholder="WordPress, renews in March" />
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save & monitor</button>
+          <button type="button" id="cancel-add" class="btn btn-ghost">Cancel</button>
+        </div>
+      </form>
+
+      <div id="sites-list" class="sites-list"></div>
+    </main>
+    <script src="/dashboard.js"></script>
+  </body>
+</html>

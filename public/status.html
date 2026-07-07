@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Site Status — SitePulse</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <nav class="nav">
+        <a href="/" class="logo">SitePulse</a>
+        <span id="status-pill" class="pill">Loading…</span>
+      </nav>
+      <section class="card status-page">
+        <h1 id="client-name">—</h1>
+        <p id="site-url" class="muted">—</p>
+        <div id="status-detail" class="site-meta"></div>
+        <p class="footer-note">Powered by SitePulse</p>
+      </section>
+    </main>
+    <script>
+      const siteId = location.pathname.split("/").pop();
+      const labels = {
+        healthy: { text: "All systems operational", class: "status-ok" },
+        down: { text: "Service disruption", class: "status-down" },
+        ssl_warning: { text: "SSL certificate expiring soon", class: "status-warn" },
+        unknown: { text: "Checking…", class: "status-unknown" }
+      };
+
+      fetch(`/api/sites/${siteId}/status`)
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.error) {
+            document.getElementById("client-name").textContent = "Site not found";
+            return;
+          }
+          const s = labels[data.status] || labels.unknown;
+          document.getElementById("client-name").textContent = data.clientName;
+          document.getElementById("site-url").innerHTML = `<a href="${data.url}" target="_blank" rel="noopener">${data.url}</a>`;
+          document.getElementById("status-pill").textContent = s.text;
+          document.getElementById("status-pill").className = `pill ${s.class}`;
+          const check = data.latest;
+          document.getElementById("status-detail").innerHTML = check
+            ? `<span>Latency: ${check.uptime.latencyMs}ms</span>
+               <span>HTTP: ${check.uptime.status || "—"}</span>
+               <span>SSL: ${check.ssl.daysLeft !== null ? check.ssl.daysLeft + "d left" : "unknown"}</span>
+               <span>Last check: ${new Date(check.checkedAt).toLocaleString()}</span>`
+            : "<span>Waiting for first check…</span>";
+        });
+    </script>
+  </body>
+</html>

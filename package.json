@@ -1,0 +1,31 @@
+{
+  "name": "site-pulse",
+  "version": "0.1.0",
+  "description": "Client site health monitor for freelancers — uptime + SSL expiry alerts.",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "check": "node ops/check-setup.js",
+    "check-auth": "node ops/check-auth.js",
+    "daily-report": "node ops/daily-report.js",
+    "growth-daily": "node ops/growth-daily.js",
+    "setup-stripe": "node ops/setup-stripe.js",
+    "setup-webhook": "node ops/setup-webhook.js",
+    "sync-vercel-env": "node ops/push-vercel-env.mjs",
+    "finish-deploy": "bash ops/finish-deploy.sh",
+    "deploy:prod": "vercel --prod --yes"
+  },
+  "keywords": ["self-hosted", "uptime", "ssl", "freelancer", "monitoring"],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "stripe": "^18.4.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "vercel": "^54.20.1"
+  }
+}

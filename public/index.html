@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SitePulse — Client Site Health Monitor</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <nav class="nav">
+        <span class="logo">SitePulse</span>
+        <a href="/dashboard" class="btn btn-primary">Open dashboard</a>
+      </nav>
+
+      <header class="hero">
+        <p class="badge">Self-hosted · Freelancer-first</p>
+        <h1>Know when a client site goes down <em>before</em> they email you</h1>
+        <p class="lead">
+          Track uptime and SSL expiry for every client website in one dashboard.
+          Add a site in 10 seconds — no API keys, no agents, no crontab wizardry.
+        </p>
+        <div class="hero-actions">
+          <a href="/dashboard" class="btn btn-primary btn-lg">Start monitoring free</a>
+          <button id="upgrade-btn" class="btn btn-ghost btn-lg">Managed $9/mo</button>
+        </div>
+      </header>
+
+      <section class="grid-3">
+        <div class="card">
+          <h3>10-second setup</h3>
+          <p>Client name + URL. That's it. We ping HTTPS and check SSL expiry automatically.</p>
+        </div>
+        <div class="card">
+          <h3>Client-centric view</h3>
+          <p>Grouped by client, not by check type. Built for freelancers managing 5–50 sites.</p>
+        </div>
+        <div class="card">
+          <h3>Self-host or cloud</h3>
+          <p>Run on your NAS with Docker. Or use managed hosting when you don't want ops.</p>
+        </div>
+      </section>
+
+      <section id="pricing" class="pricing">
+        <h2>Simple pricing</h2>
+        <div class="grid-2">
+          <div class="card">
+            <h3>Self-hosted</h3>
+            <p class="price">$0 <span>forever</span></p>
+            <ul>
+              <li>Up to 50 sites</li>
+              <li>Uptime + SSL monitoring</li>
+              <li>Telegram / email alerts</li>
+              <li>Docker one-liner deploy</li>
+            </ul>
+          </div>
+          <div class="card card-highlight">
+            <h3>Managed Cloud</h3>
+            <p class="price">$9 <span>/month</span></p>
+            <ul>
+              <li>Unlimited sites</li>
+              <li>5-minute checks</li>
+              <li>Status page per client</li>
+              <li>Priority support</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <p>SitePulse — part of the self-hosted earn-money stack</p>
+      </footer>
+    </main>
+    <script>
+      document.getElementById("upgrade-btn")?.addEventListener("click", async () => {
+        const res = await fetch("/api/stripe/checkout", { method: "POST" });
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+        else alert(data.error || "Checkout not available yet. Use self-hosted for free.");
+      });
+    </script>
+  </body>
+</html>
